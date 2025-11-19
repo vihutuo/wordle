@@ -3,10 +3,9 @@ import flet as ft
 def IndexView(page:ft.Page, params):
     def CreateAppBar():
         app_bar = ft.AppBar(
-            leading=ft.Image("images/csc_logo_100.png"),
-            leading_width=40,
-            title=ft.Text("Flet Template"),
-            #center_title=False,
+
+            title=ft.Text("Wordle",font_family="playwrite"),
+            center_title=True,
             bgcolor=ft.Colors.SURFACE_CONTAINER_HIGHEST,
             actions=[
                 ft.IconButton(ft.Icons.RESTART_ALT, on_click=restart_clicked),
@@ -17,7 +16,7 @@ def IndexView(page:ft.Page, params):
         return app_bar
 
     def restart_clicked(e):
-         dlg = ft.AlertDialog(title=ft.Text("You clicked restart"))
+         dlg = ft.AlertDialog(title=ft.Text("New Game!"))
          page.open(dlg)
     def btn_question1_clicked(e):
         page.go("/question/1")
@@ -28,19 +27,39 @@ def IndexView(page:ft.Page, params):
     def btn_simple_clicked(e):
         page.go("/simple_view")
 
-    txt = ft.Text("Welcome to the Flet Template", font_family="playwrite")
-    col_right = ft.Row(controls=[txt], alignment=ft.MainAxisAlignment.END)
-    btn_question1 = ft.ElevatedButton("Question1", on_click=btn_question1_clicked)
-    btn_question2 = ft.ElevatedButton("Question2", on_click=btn_question2_clicked)
-    btn_simple = ft.ElevatedButton("Simple View", on_click=btn_simple_clicked)
-    img_1 = ft.Image(src="images/m1.jpg", width=300)
+
+
+
+    #btn_question1 = ft.ElevatedButton("Question1", on_click=btn_question1_clicked)
+    #btn_question2 = ft.ElevatedButton("Question2", on_click=btn_question2_clicked)
+    #btn_simple = ft.ElevatedButton("Simple View", on_click=btn_simple_clicked)
+
     appbar = CreateAppBar()
+
+    def build_board(rows=5, cols=5):
+        board = ft.Column()
+        for _ in range(rows):
+            row = ft.Row(alignment=ft.MainAxisAlignment.CENTER)
+            for _ in range(cols):
+
+                row.controls.append(
+                    ft.Container(
+                        width=75,
+                        height=75,
+                        bgcolor=ft.Colors.BLUE_GREY_200,
+                    )
+                )
+            board.controls.append(row)
+        return board
 
     page.views.append(ft.View(
         "/",
-        [appbar, col_right, btn_question1, btn_question2, btn_simple, img_1],
+        [appbar, build_board() ],
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
 
     )
     )
     page.update()
+
+
+

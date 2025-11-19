@@ -1,0 +1,50 @@
+        1.      BRISK — Quick, with a hint of coldness.
+	2.	GLADE — Where the forest opens its eyes.
+	3.	TWINE — Thin strength wrapped around itself.
+	4.	VAULT — Jump over—or hide something well.
+	5.	BROOD — What sits on eggs or on thoughts.
+	6.	CHIME — A sound that marks gentle time.
+	7.	FLAIR — Style that feels natural.
+	8.	GROVE — A neat group of trees.
+	9.	MUSED — Thinking in slow circles.
+	10.	PERCH — A small, high resting spot.
+	11.	QUEST — A search with meaning.
+	12.	THORN — Nature’s tiny warning.
+	13.	UNITE — Join what was separate.
+	14.	RUMOR — News that whispers.
+	15.	SLEEK — Smooth without effort.
+	16.	BLAZE — A bright, fast fire.
+	17.	SWIRL — A motion that never quite settles.
+	18.	PRISM — A shape that plays with light.
+	19.	FETCH — Go get and return.
+	20.	CLEVER — Smart in a nimble way.
+	21.	TANGLE — A knot that grew wild.
+	22.	HASTE — Moving faster than comfort.
+	23.	FAINT — Soft enough to nearly disappear.
+	24.	DROOP — When things get tired and sink.
+	25.	CRAFT — Skill made with hands.
+	26.	WIDER — More room than before.
+	27.	FLOCK — A group that moves like one.
+	28.	STOOP — Bend where your pride doesn’t.
+	29.	NUDGE — A tiny push with meaning.
+	30.	CRISP — Firm with a pleasant snap.
+	31.	BRINE — Salt in water’s clothing.
+	32.	SLOOP — A small ship with simple grace.
+	33.	QUILT — Warmth stitched together.
+	34.	SWEEP — Clean with long motions.
+	35.	GLOAT — Enjoy your victory too loudly.
+	36.	WHIRL — Spin without a center.
+	37.	HAVEN — A spot where troubles pause.
+	38.	MIRTH — Happiness that bubbles up.
+	39.	RELIC — A piece saved from time’s hands.
+	40.	NOBLE — High in character or rule.
+	41.	HOARD — Keep too much, too long.
+	42.	STERN — Serious, with no smile.
+	43.	POISE — Balance with grace.
+	44.	GRAZE — Touch lightly—or feed lightly.
+	45.	STAVE — A stick that keeps rhythm.
+	46.	RAVEL — Threads that confuse or unravel.
+	47.	FABLE — A small story with a lesson hiding.
+	48.	LOFTY — High in height or in ideas.
+	49.	PECAN — A nut with rich sweetness.
+	50.	BLUFF — A high cliff—or a confident lie.
