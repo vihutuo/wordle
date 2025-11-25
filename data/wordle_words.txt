@@ -1,3 +1,27 @@
 BRISK,"Quick, with a hint of coldness."
 GLADE,Where the forest opens its eyes.
 TWINE,Thin strength wrapped around itself.
+APPLE,A fruit
+CRISP, A snap of freshness on the tongue.
+GLINT, A tiny flash where light finds an edge.
+EMBER, A small glow that refuses to go out.
+FROST, Morning’s quiet handwriting on glass.
+SHADE, Where the sun’s stories grow softer.
+BLAZE, Fire that forgot how to be small.
+MIRTH, Laughter dressed in bright colors.
+SMIRK, A secret smile that escaped early.
+GUSTY, When the wind can’t sit still.
+TWIRL, A spin that forgets how to stop.
+QUEST, A journey that starts with a question.
+RIVER, A road that water walks alone.
+STORM, The sky arguing with itself.
+PETAL, A soft fragment of a flower’s thought.
+CLOUD, A wandering daydream in the sky.
+WHIRL, When the world decides to spin for fun.
+MOSSY, Where the ground grows a quiet beard.
+NIGHT, The day’s shadow grown full-size.
+SPARK, The first idea of a fire.
+DRIFT, Movement so lazy it feels like thinking.
+STONE, A memory the earth decided to keep.
+QUIET, Sound holding its breath for a moment.
+SCENT, A memory that travels through the air.
