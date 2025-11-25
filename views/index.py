@@ -6,15 +6,17 @@ def IndexView(page:ft.Page, params):
     def CreateAppBar():
         app_bar = ft.AppBar(
 
-            title=ft.Text("Wordle",font_family="playwrite",size=45),
-            center_title=True,
-            bgcolor=ft.Colors.SURFACE_CONTAINER_HIGHEST,
-            toolbar_height=150,
-            actions=[
-                ft.IconButton(ft.Icons.RESTART_ALT, on_click=restart_clicked,icon_size=40),
-                ft.IconButton(ft.Icons.LIGHTBULB,icon_size=40,on_click=hint),
+            title=ft.Row([ft.Text("Wordle ",font_family="font2",size=45),
+                          ft.IconButton(ft.Icons.RESTART_ALT, on_click=restart_clicked, icon_size=40),
+                          ft.IconButton(ft.Icons.LIGHTBULB, icon_size=40, on_click=hint)
 
-            ],
+                          ],
+                         alignment=ft.MainAxisAlignment.CENTER,),
+
+            bgcolor=ft.Colors.SURFACE_CONTAINER_HIGHEST,
+            toolbar_height=120,
+
+
         )
         return app_bar
     def hint(e):
@@ -70,16 +72,16 @@ def IndexView(page:ft.Page, params):
                 txt = ft.Text(
                     value="",
                     color= ft.Colors.WHITE,
-                    size=28,
+                    size=48,
                     weight=ft.FontWeight.BOLD,
                     text_align=ft.TextAlign.CENTER,
                 )
                 row.controls.append(
                     ft.Container(
-                    width=45,
-                    height=45,
+                    width=75,
+                    height=75,
                     bgcolor=ft.Colors.BLUE_GREY_900,
-                    border_radius=10,
+                    border_radius=20,
                     alignment=ft.alignment.center,
                     content=txt
                 )
@@ -102,7 +104,7 @@ def IndexView(page:ft.Page, params):
         guess = Guess.value.strip().upper()
 
         if len(guess) != cols or not guess.isalpha():
-            message.value = "Enter exactly 5 letters."
+            message.value = "Please Enter 5 letters."
             page.update()
             return
 
@@ -110,7 +112,7 @@ def IndexView(page:ft.Page, params):
             box_txt[current_row][i].value = ch
 
         if guess == Answer:
-            message.value = f" You got it! The word was {Answer}."
+            message.value = f" Correct! The word was {Answer}."
             message.color= ft.Colors.GREEN
             Guess.disabled = True
         else:
@@ -125,10 +127,10 @@ def IndexView(page:ft.Page, params):
 
 
 
-    Guess = ft.TextField(label="Type here", max_length=5, width=250, on_submit=check_guess)
+    Guess = ft.TextField(label="Type here", max_length=5, width=250, on_submit=check_guess,text_size=28,autofocus=True)
 
     message = ft.Text(
-        value="Guess the Word",)
+        value="Guess the Word",text_align=ft.TextAlign.CENTER,size=25,font_family="font1")
     page.update()
 
 
@@ -161,6 +163,3 @@ def IndexView(page:ft.Page, params):
     )
     )
     page.update()
-
-
-

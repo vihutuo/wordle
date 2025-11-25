@@ -5,11 +5,13 @@ from views.simple_view import SimpleView
 
 def main(page: ft.Page):
   page.title = "Flet Template"
-  #page.theme_mode = "light"
-  page.theme = ft.Theme(color_scheme_seed=ft.Colors.GREEN)
+  page.bgcolor = "#020617"
   page.fonts = {
     "Kanit": "https://raw.githubusercontent.com/google/fonts/master/ofl/kanit/Kanit-Bold.ttf",
     "playwrite": "fonts/playwrite.ttf",
+      "font1":"fonts/PartyClash.otf",
+      "font2":"fonts/Bromolek.otf",
+      "font3":"Retro Block.ttf"
   }
 
   def route_change(route):
