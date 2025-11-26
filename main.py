@@ -4,7 +4,8 @@ from views.question import QuestionView
 from views.simple_view import SimpleView
 
 def main(page: ft.Page):
-  page.title = "Flet Template"
+  page.title = "CS Project 2025 - Class 12 A Sci "
+  page.expand=True
   page.bgcolor = "#020617"
   page.fonts = {
     "Kanit": "https://raw.githubusercontent.com/google/fonts/master/ofl/kanit/Kanit-Bold.ttf",
@@ -33,4 +34,4 @@ def main(page: ft.Page):
   page.on_view_pop = view_pop
   page.go(page.route)
 #ft.app(target=main)
-ft.app(target=main,  view=ft.AppView.WEB_BROWSER)
+ft.app(target=main,assets_dir="assets",)

@@ -19,9 +19,18 @@ def IndexView(page:ft.Page, params):
 
         )
         return app_bar
+
+
+
+
     def hint(e):
         dlg =ft.AlertDialog(title=ft.Text(hint))
         page.open(dlg)
+
+
+
+
+
     def restart_clicked(e):
 
         nonlocal current_row, Answer,hint
@@ -29,15 +38,40 @@ def IndexView(page:ft.Page, params):
         Guess.disabled=False
         Guess.value=""
         Answer,hint = random.choice(word_list)
+        wins=0
+        winstreak.value = f"🏆 Streak: {wins}"
         message.value="Guess the Word"
 
         for r in range(rows):
             for c in range(cols):
-                box_txt[r][c].value = ""
+                boxes_txt[r][c].value = ""
+                boxes[r][c].bgcolor = ft.Colors.BLUE_GREY_700
         print("Answer:",Answer)
         page.update()
         dlg = ft.AlertDialog(title=ft.Text("New Game started!"))
         page.open(dlg)
+
+
+
+
+
+
+    def win(e):
+
+        nonlocal current_row, Answer, hint
+        current_row = 0
+        Guess.disabled = False
+        Guess.value = ""
+        Answer, hint = random.choice(word_list)
+        message.value = "Correct! Try another One!"
+        winstreak.value = f"🏆 Streak: {wins}"
+
+        for r in range(rows):
+            for c in range(cols):
+                boxes_txt[r][c].value = ""
+                boxes[r][c].bgcolor = ft.Colors.BLUE_GREY_700
+        print("Answer:", Answer)
+        page.update()
 
 
 
@@ -57,15 +91,17 @@ def IndexView(page:ft.Page, params):
     #btn_question2 = ft.ElevatedButton("Question2", on_click=btn_question2_clicked)
     #btn_simple = ft.ElevatedButton("Simple View", on_click=btn_simple_clicked)
 
-    appbar = CreateAppBar()
+
 
     def build_board(rows, cols):
         board = ft.Column()
 
-        box_txt = []
+        boxes_txt = []
+        boxes = []
 
         for _ in range(rows):
             row = ft.Row(alignment=ft.MainAxisAlignment.CENTER)
+            row_boxes = []
             row_box_txt = []
 
             for _ in range(cols):
@@ -76,8 +112,7 @@ def IndexView(page:ft.Page, params):
                     weight=ft.FontWeight.BOLD,
                     text_align=ft.TextAlign.CENTER,
                 )
-                row.controls.append(
-                    ft.Container(
+                box =  ft.Container(
                     width=75,
                     height=75,
                     bgcolor=ft.Colors.BLUE_GREY_900,
@@ -85,47 +120,98 @@ def IndexView(page:ft.Page, params):
                     alignment=ft.alignment.center,
                     content=txt
                 )
-                )
+
+                row.controls.append(box)
+                row_boxes.append(box)
 
                 row_box_txt.append(txt)
 
-            box_txt.append(row_box_txt)
+            boxes_txt.append(row_box_txt)
+            boxes.append(row_boxes)
             board.controls.append(row)
-        return board,  box_txt
+        return board,boxes, boxes_txt
+
+
+
 
 
 
     def check_guess(e):
-        nonlocal current_row, Answer
-
-        if current_row >= rows or Guess.disabled:
-            return
+        nonlocal current_row, Answer,wins
 
         guess = Guess.value.strip().upper()
 
-        if len(guess) != cols or not guess.isalpha():
-            message.value = "Please Enter 5 letters."
+        if guess not in valid_list:
+            message.value="Please Enter a valid Word"
+            message.color  = ft.Colors.RED_300
             page.update()
             return
 
+
+
         for i, ch in enumerate(guess):
-            box_txt[current_row][i].value = ch
+            boxes_txt[current_row][i].value = ch
+
+        answer_list = list(Answer)
+        color_list = ["dark"] * cols
+
+        for i in range(cols):
+            if guess[i] == answer_list[i]:
+                color_list[i] = "green"
+                answer_list[i] = None
+        for i in range(cols):
+            if color_list[i] == "green":
+                continue
+            if guess[i] in answer_list:
+                color_list[i] = "yellow"
+                j = answer_list.index(guess[i])
+                answer_list[j] = None
+
+
+
+
+        for i, color in enumerate(color_list):
+            box = boxes[current_row][i]
+
+            if color == "green":
+                box.bgcolor = ft.Colors.GREEN
+            elif color == "green":
+                box.bgcolor = ft.Colors.YELLOW
+            else:
+                box.bgcolor = ft.Colors.BLUE_GREY_900
+
+
+
 
         if guess == Answer:
             message.value = f" Correct! The word was {Answer}."
             message.color= ft.Colors.GREEN
             Guess.disabled = True
+            correct_sfx.pause()
+            correct_sfx.play()
+            wins+=1
+            win(e)
+
         else:
             current_row += 1
             if current_row >= rows:
                 message.value = f" Out of tries! The word was {Answer}."
                 Guess.disabled = True
+                wrong_sfx.pause()
+                wrong_sfx.play()
 
         Guess.value = ""
+
         page.update()
+        return wins
 
 
 
+
+
+
+    wins = 0
+    winstreak = ft.Text(value=f"🏆 Streak: {wins}")
 
     Guess = ft.TextField(label="Type here", max_length=5, width=250, on_submit=check_guess,text_size=28,autofocus=True)
 
@@ -135,11 +221,11 @@ def IndexView(page:ft.Page, params):
 
 
 
-
-    board,  box_txt = build_board(rows=5, cols=5)
     current_row = 0
     rows = 5
     cols = 5
+    board, boxes, boxes_txt = build_board(rows, cols)
+    appbar = CreateAppBar()
 
 
 
@@ -149,15 +235,33 @@ def IndexView(page:ft.Page, params):
         for row in wordle_words
     ]
 
+    valid_words = misc.ReadCSV("data/valid words.txt")
+    valid_list= [
+        (row[0]) for row in valid_words
+
+    ]
+
     Answer, hint = random.choice(word_list)
 
+    correct_sfx = ft.Audio(
+        src="Audio/correct2.wav",
+        volume=1,
+        autoplay=False,
+    )
+    wrong_sfx = ft.Audio(
+        src="Audio/wrong1.wav",
+        volume=1,
+        autoplay=False,
+    )
+
+    page.overlay.append(correct_sfx)
+    page.overlay.append(wrong_sfx)
 
 
-    print(wordle_words)
     print("Answer:",Answer)
     page.views.append(ft.View(
         "/",
-        [appbar, board,Guess, message ],
+        [appbar, board,Guess, message,winstreak, ],
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
 
     )
