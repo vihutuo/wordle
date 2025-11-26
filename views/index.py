@@ -1,6 +1,8 @@
 import flet as ft
 from mypack import  misc
 import random
+import asyncio
+
 
 def IndexView(page:ft.Page, params):
     def CreateAppBar():
@@ -53,9 +55,11 @@ def IndexView(page:ft.Page, params):
     def build_board(rows, cols):
         board = ft.Column()
         box_txt = []
+
         for _ in range(rows):
             row = ft.Row(alignment=ft.MainAxisAlignment.CENTER)
             row_box_txt = []
+
             for _ in range(cols):
                 txt = ft.Text(
                     value="",
@@ -63,16 +67,27 @@ def IndexView(page:ft.Page, params):
                     size=48,
                     weight=ft.FontWeight.BOLD,
                     text_align=ft.TextAlign.CENTER,
+
                 )
                 row.controls.append(
                     ft.Container(
                     width=75,
                     height=75,
+
                     bgcolor=ft.Colors.BLUE_GREY_900,
                     border_radius=20,
                     alignment=ft.alignment.center,
-                    content=txt
-                )
+                    content=txt,
+                    animate=ft.Animation(600, ft.AnimationCurve.EASE_OUT),
+                    rotate=ft.Rotate(
+                           angle=0,
+                            alignment=ft.alignment.center
+                    ),
+                    animate_rotation=300,
+
+                ),
+
+
                 )
                 row_box_txt.append(txt)
 
@@ -80,7 +95,7 @@ def IndexView(page:ft.Page, params):
             board.controls.append(row)
         return board,  box_txt
 
-    def check_guess(e):
+    async def check_guess(e):
         nonlocal current_row, Answer
         if current_row >= rows or Guess.disabled:
             return
@@ -92,7 +107,11 @@ def IndexView(page:ft.Page, params):
 
         for i, ch in enumerate(guess):
             box_txt[current_row][i].value = ch
-
+            #board.controls[current_row].controls[i].rotate.angle += 2 * 3.14
+            board.controls[current_row].controls[i].bgcolor = "green"
+            #box_txt[current_row][i].rotate.angle += 2 * 3.14
+            page.update()
+            await asyncio.sleep(0.5)
         if guess == Answer:
             message.value = f" Correct! The word was {Answer}."
             message.color= ft.Colors.GREEN
@@ -119,6 +138,7 @@ def IndexView(page:ft.Page, params):
 
     wordle_words = misc.ReadCSV("data/wordle_words.txt")
     all_words  = misc.GetAllWords("data/5-letter-words.txt")
+
     #print(all_words[0:10])
     word_list = [
         (row[0].strip().upper(), row[1].strip())
