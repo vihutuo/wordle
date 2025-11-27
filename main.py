@@ -6,6 +6,7 @@ from views.simple_view import SimpleView
 def main(page: ft.Page):
   page.title = "CS Project 2025 - Class 12 A Sci "
   page.expand=True
+  page.theme_mode = ft.ThemeMode.DARK
 
   page.bgcolor = "#020617"
   page.fonts = {
