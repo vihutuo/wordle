@@ -10,7 +10,7 @@ def ShuffleString(s):
 
 
 def ReadCSV(filename):
-    with open(filename, mode='r') as file:
+    with open(filename, mode='r',encoding="utf-8") as file:
         csvFile = list(csv.reader(file))
     return csvFile
 
@@ -23,7 +23,7 @@ def GetRandomWord(file_name):
 
 
 def GetAllWords(file_name):
-    with open(file_name, "r") as f:
+    with open(file_name, "r",encoding="utf-8") as f:
         L1 = f.read().upper().splitlines()
     return L1
 
