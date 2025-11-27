@@ -23,12 +23,12 @@ def GetRandomWord(file_name):
 
 
 def GetAllWords(file_name):
+    #returns a set
     with open(file_name, "r",encoding="utf-8") as f:
-        L1 = f.read().upper().splitlines()
-    return L1
+        return {line.strip().upper() for line in f}
+
 
 def generate_valid_words(letters, word_set, min_length=3):
-    # List to store valid words
     valid_words = []
 
     # Iterate over all possible word lengths

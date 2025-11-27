@@ -249,18 +249,9 @@ def IndexView(page:ft.Page, params):
         for row in wordle_words
     ]
 
-    valid_words = misc.ReadCSV("data/5-letter-words.txt")
-    valid_list = [
-        (row[0]) for row in valid_words
-
-    ]
-
+    valid_list = misc.GetAllWords("data/5-letter-words.txt") #returns set
+    print(list(valid_list)[:10])
     Answer, hint = random.choice(word_list)
-
-
-
-
-
     correct_sfx = ft.Audio(
         src="Audio/correct3.wav",
         volume=0.9,
