@@ -4,19 +4,20 @@ import random
 import asyncio
 
 
-def IndexView(page:ft.Page, params):
+def IndexView(page: ft.Page, params):
+    tile_size = params.get("tile_size")
     def CreateAppBar():
         app_bar = ft.AppBar(
 
             title=ft.Row([ft.Text("Wordle ",font_family="font2",size=45),
                           ft.IconButton(ft.Icons.RESTART_ALT, on_click= restart_clicked, icon_size=40),
-                          ft.IconButton(ft.Icons.LIGHTBULB, icon_size=40, on_click=hint)
+                          ft.IconButton(ft.Icons.LIGHTBULB, icon_size=40, on_click=show_hint)
 
                           ],
                          alignment=ft.MainAxisAlignment.CENTER,),
 
             bgcolor= "#1A1C1E",
-            toolbar_height=120,
+            toolbar_height=110,
 
 
         )
@@ -25,7 +26,7 @@ def IndexView(page:ft.Page, params):
 
 
 
-    def hint(e):
+    def show_hint(e):
         dlg =ft.AlertDialog(title=ft.Text(hint,font_family="font3",size=35),)
         page.open(dlg)
 
@@ -50,7 +51,7 @@ def IndexView(page:ft.Page, params):
                 boxes[r][c].bgcolor = ft.Colors.BLUE_GREY_700
         print("Answer:", Answer)
         page.update()
-        dlg = ft.AlertDialog(title=ft.Text("New Game started!",font_family="font2",size=30),)
+        dlg = ft.AlertDialog(title=ft.Text("New Game started!",font_family="font3",size=30),)
         page.open(dlg)
 
 
@@ -96,7 +97,7 @@ def IndexView(page:ft.Page, params):
 
 
 
-    def build_board(rows, cols):
+    def build_board(rows, cols,tile_size):
         board = ft.Column()
 
         boxes_txt = []
@@ -111,13 +112,13 @@ def IndexView(page:ft.Page, params):
                 txt = ft.Text(
                     value="",
                     color=ft.Colors.WHITE,
-                    size=48,
+                    size=tile_size * 0.5,
                     weight=ft.FontWeight.BOLD,
                     text_align=ft.TextAlign.CENTER,
                 )
                 box = ft.Container(
-                    width=75,
-                    height=75,
+                    width=tile_size,
+                    height=tile_size,
 
                     bgcolor=ft.Colors.BLUE_GREY_900,
                     border_radius=20,
@@ -167,7 +168,7 @@ def IndexView(page:ft.Page, params):
             #board.controls[current_row].controls[i].rotate.angle += 2 * 3.14
             #box_txt[current_row][i].rotate.angle += 2 * 3.14
             page.update()
-            await asyncio.sleep(0.4)
+            await asyncio.sleep(0.36)
 
         """answer_list = list(Answer)
         color_list = ["dark"] * cols
@@ -217,6 +218,7 @@ def IndexView(page:ft.Page, params):
                 wrong_sfx.play()
 
         Guess.value = ""
+        Guess.focus()
 
         page.update()
         return wins
@@ -238,7 +240,7 @@ def IndexView(page:ft.Page, params):
     current_row = 0
     rows = 5
     cols = 5
-    board, boxes, boxes_txt = build_board(rows, cols)
+    board, boxes, boxes_txt = build_board(rows, cols, tile_size)
     appbar = CreateAppBar()
 
 
@@ -253,12 +255,12 @@ def IndexView(page:ft.Page, params):
     print(list(valid_list)[:10])
     Answer, hint = random.choice(word_list)
     correct_sfx = ft.Audio(
-        src="Audio/correct2.wav",
+        src="Audio/correct3.wav",
         volume=0.9,
         autoplay=False,
     )
     wrong_sfx = ft.Audio(
-        src="Audio/wrong1.wav",
+        src="Audio/wrong3.wav",
         volume=0.9,
         autoplay=False,
     )
@@ -279,7 +281,7 @@ def IndexView(page:ft.Page, params):
          ft.Row([winstreak,next_game_btn
 
         ],alignment=ft.MainAxisAlignment.CENTER,)],bgcolor = "#0f1115",
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER,scroll=ft.ScrollMode.AUTO
 
     )
     )
